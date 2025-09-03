@@ -6,7 +6,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { nixpkgs, self }:
     let
       inherit (nixpkgs) lib;
 
@@ -19,6 +19,7 @@
     in
     {
       apps = forEachSystem (pkgs: {
+        default = self.apps.${pkgs.system}.serve-nixpkgs-manual;
         serve-nixpkgs-manual = {
           type = "app";
           program = lib.getExe (
